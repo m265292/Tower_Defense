@@ -3,7 +3,8 @@ from helpers import *
 from horde import *
 from player import *
 from tower import *
-
+from sounds import play_music, stop_music, arrow_sound
+import os
 # pygame setup
 pygame.init()
 
@@ -37,6 +38,12 @@ horde_group = pygame.sprite.Group()
 num_horde = 10
 [horde_group.add(Horde(screen, score)) for n in range(num_horde)]
 horde_rect = Horde(screen, score).rect
+
+music_path = os.path.join('assets/sounds/song.mid')
+sound_path = os.path.join('assets/sounds/arrow_impact.wav')
+play_music()
+
+
 running = True
 while running:
     game_over = False
@@ -47,7 +54,7 @@ while running:
             [horde_group.add(Horde(screen, score)) for n in range(2)]
         if int(pygame.time.get_ticks() / 1000) % 100 == 0 and len(horde_group) < 20:
             [horde_group.add(Horde(screen, score)) for n in range(5)]
-        # pygame.QUIT event means the user clicked X to close your window
+        # pygame.QUIT event means the user clicked X to close your windowr
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -58,10 +65,11 @@ while running:
             hit = pygame.sprite.groupcollide(arrow_group, horde_group, True, True)
             if hit:
                 score[0] += 1
+                arrow_sound()
             if pygame.sprite.groupcollide(horde_group, tower_group, True, False):
                 my_tower.damage()
             for h in horde_group:
-                if h.rect.x < screen.get_width() / 2:
+                if h.rect.x < my_player.rect.x or h.rect.x + h.rect.width > my_player.rect.x + my_player.rect.width:
                     game_over = True
             # draw the background on the screen
         screen.blit(background, (0, 0))
@@ -100,5 +108,5 @@ while running:
             game_over = False
             score = 0
     pygame.display.flip()
-
+stop_music()
 pygame.quit()
