@@ -1,6 +1,7 @@
 import pygame
 from random import randint, randrange
 
+
 # this function will take 2 surface and center the 2nd surface on the first one
 def center_surfaces(bg, fg):
     # get the bg width and height
@@ -10,7 +11,8 @@ def center_surfaces(bg, fg):
     fg_width = fg.get_width()
     fg_height = fg.get_height()
     # blit the text on the surface
-    bg.blit(fg, (bg_width/2 - fg_width/2, bg_height/2-fg_height/2 ))
+    bg.blit(fg, (bg_width / 2 - fg_width / 2, bg_height / 2 - fg_height / 2))
+
 
 def make_background(screen):
     WIDTH = screen.get_width()
@@ -35,16 +37,11 @@ def make_background(screen):
     for x in range(0, WIDTH, tile_width):
         background.blit(grass_tile, (x, HEIGHT - tile_height))
     for x in range(0, WIDTH, tile_width):
-        background.blit(grass_top, (x, randrange(HEIGHT- 1.5*tile_height,HEIGHT)))
+        background.blit(grass_top, (x, randrange(HEIGHT - 1.5 * tile_height, HEIGHT)))
     num_clouds = 4
     for c in range(num_clouds):
-        background.blit(cloud_tile,(randint(0, WIDTH), randint(0, 50)))
+        background.blit(cloud_tile, (randint(0, WIDTH), randint(0, 50)))
     num_trees = 4
     for t in range(num_trees):
-        background.blit(tree_tile, (randint(0, WIDTH), HEIGHT-4*tile_height))
+        background.blit(tree_tile, (randint(0, WIDTH), HEIGHT - 4 * tile_height))
     return background
-
-
-
-
-
